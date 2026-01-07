@@ -14,12 +14,11 @@ const InsightsView: React.FC<InsightsViewProps> = ({ expenses }) => {
   const [loadingStep, setLoadingStep] = useState(0);
 
   const loadingMessages = [
-    "Initializing Deepan Intelligence...",
-    "Deconstructing transaction history...",
-    "Scanning for recurring leaks...",
-    "Identifying sub-category patterns...",
-    "Running savings simulations...",
-    "Finalizing professional advice..."
+    "Starting Intelligence...",
+    "Scanning History...",
+    "Analyzing Patterns...",
+    "Simulating Savings...",
+    "Finalizing Tips..."
   ];
 
   const fetchInsights = async () => {
@@ -27,10 +26,10 @@ const InsightsView: React.FC<InsightsViewProps> = ({ expenses }) => {
     setLoading(true);
     setLoadingStep(0);
     
-    // Cycle through messages while fetching
+    // Snappy 600ms interval for faster visual feedback
     const interval = setInterval(() => {
       setLoadingStep(prev => (prev + 1) % loadingMessages.length);
-    }, 1500);
+    }, 600);
 
     try {
       const data = await generateSavingsInsights(expenses);
@@ -82,44 +81,34 @@ const InsightsView: React.FC<InsightsViewProps> = ({ expenses }) => {
 
       {loading ? (
         <div className="bg-white p-16 rounded-[3rem] shadow-sm border border-slate-100 flex flex-col items-center justify-center relative overflow-hidden">
-          {/* Background Decorative Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/5 rounded-full -ml-32 -mb-32 blur-3xl animate-pulse"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-2xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/5 rounded-full -ml-32 -mb-32 blur-2xl animate-pulse"></div>
 
-          {/* Dynamic Central Loader */}
-          <div className="relative w-32 h-32 mb-10">
-             {/* Outer pulsing ring */}
+          <div className="relative w-24 h-24 mb-8">
              <div className="absolute inset-0 border-4 border-blue-500/10 rounded-full animate-ping"></div>
-             <div className="absolute inset-0 border-4 border-blue-500/20 rounded-full scale-110 animate-pulse"></div>
-             
-             {/* Scanning ring */}
              <div className="absolute inset-0 border-t-4 border-blue-600 rounded-full animate-spin"></div>
-             
-             {/* Icon Carousel based on step */}
-             <div className="absolute inset-0 flex items-center justify-center text-blue-600 transition-all duration-500 transform scale-110">
-                {loadingStep === 0 && <BrainCircuit size={40} className="animate-bounce" />}
-                {loadingStep === 1 && <Search size={40} className="animate-pulse" />}
-                {loadingStep === 2 && <TrendingDown size={40} className="animate-bounce" />}
-                {loadingStep === 3 && <Target size={40} className="animate-pulse" />}
-                {loadingStep === 4 && <Zap size={40} className="animate-bounce" />}
-                {loadingStep === 5 && <Sparkles size={40} className="animate-pulse" />}
+             <div className="absolute inset-0 flex items-center justify-center text-blue-600">
+                {loadingStep === 0 && <BrainCircuit size={32} />}
+                {loadingStep === 1 && <Search size={32} />}
+                {loadingStep === 2 && <TrendingDown size={32} />}
+                {loadingStep === 3 && <Target size={32} />}
+                {loadingStep === 4 && <Zap size={32} />}
              </div>
           </div>
 
-          <div className="text-center relative">
-            <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-2 transition-all duration-300">
+          <div className="text-center">
+            <h3 className="text-base font-black text-slate-800 uppercase tracking-tight mb-2">
               {loadingMessages[loadingStep]}
             </h3>
-            <div className="flex items-center justify-center gap-1.5">
-              <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-              <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></div>
+            <div className="flex items-center justify-center gap-1">
+              <div className="w-1 h-1 bg-blue-600 rounded-full animate-bounce"></div>
+              <div className="w-1 h-1 bg-blue-600 rounded-full animate-bounce [animation-delay:0.1s]"></div>
+              <div className="w-1 h-1 bg-blue-600 rounded-full animate-bounce [animation-delay:0.2s]"></div>
             </div>
           </div>
         </div>
       ) : insight ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-fadeIn">
-          {/* AI Suggestions Card */}
           <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative group overflow-hidden transition-all hover:border-blue-200">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <Lightbulb size={64} className="text-blue-600" />
@@ -140,7 +129,6 @@ const InsightsView: React.FC<InsightsViewProps> = ({ expenses }) => {
             </ul>
           </div>
 
-          {/* Avoidable Spends Card */}
           <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative group overflow-hidden transition-all hover:border-rose-200">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <ShieldAlert size={64} className="text-rose-600" />
@@ -158,7 +146,6 @@ const InsightsView: React.FC<InsightsViewProps> = ({ expenses }) => {
             </div>
           </div>
 
-          {/* Monthly Savings Target Card */}
           <div className="bg-slate-900 p-8 rounded-[2.5rem] shadow-xl shadow-slate-200 relative group overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
             <div className="flex items-center gap-4 mb-8">
